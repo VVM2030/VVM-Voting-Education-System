@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>VVM Voting Register</title>
+
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link href="css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="sidebar" data-color="azure" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+            <div class="sidebar-wrapper">
+                <ul class="nav" style="margin-top: 50px;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="userinfo.html">
+                            <i class="material-icons">content_paste</i>
+                            <p>Information</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            <i class="material-icons">check_box</i>
+                            <p>Student Registration</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="votingarea.html">
+                            <i class="material-icons">how_to_vote</i>
+                            <p>Voting-Area</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="result.html">
+                            <i class="material-icons">assessment</i>
+                            <p>Result</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="material-icons">logout</i>
+                            <p>LogOut</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-panel">
+            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <a class="navbar-brand" href="javascript:;"></a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="content">
+                <div class="container" style="width: 800px;">
+                    <div id="currentPhase">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-info">
+                                    <h4 class="card-title">REGISTRATION</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form id="registerForm">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-outline">
+                                                    <br />
+                                                    <input type="text" id="registerNumber" class="form-control" name="aadharno" required />
+                                                    <label class="form-label" for="registerNumber">Register Number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-outline">
+                                                    <br />
+                                                    <input type="text" id="department" class="form-control" name="account_address" required />
+                                                    <label class="form-label" for="department">Department (in capital letters)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-outline">
+                                                    <br />
+                                                    <input type="text" id="batchYearInput" class="form-control" required />
+                                                    <label class="form-label" for="batchYearInput">Batch Year (Example: 2022, 2023, 2024)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <br />
+                                                <label class="form-label">Select Year:</label>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="mx-3">
+                                                        <input type="radio" id="year1" name="year" value="1" required />
+                                                        <label for="year1">First Year</label>
+                                                    </div>
+                                                    <div class="mx-3">
+                                                        <input type="radio" id="year2" name="year" value="2" required />
+                                                        <label for="year2">Second Year</label>
+                                                    </div>
+                                                    <div class="mx-3">
+                                                        <input type="radio" id="year3" name="year" value="3" required />
+                                                        <label for="year3">Third Year</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <br />
+                                                <label class="form-label">Select Shift:</label>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="mx-3">
+                                                        <input type="radio" id="shift1" name="shift" value="1" required />
+                                                        <label for="shift1">Shift 1</label>
+                                                    </div>
+                                                    <div class="mx-3">
+                                                        <input type="radio" id="shift2" name="shift" value="2" required />
+                                                        <label for="shift2">Shift 2</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <button type="submit" class="btn btn-info btn-block mb-4">Register</button>
+                                    </form>
+
+                                    <p id="successMessage" style="color: green; display: none;">User registered successfully!.</p>
+                                    <p style="color: red;" id="message"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script>
+
+document.getElementById("registerForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const registerNumber = document.getElementById("registerNumber").value.trim();
+    const department = document.getElementById("department").value.trim().toUpperCase();
+    const batchYear = document.getElementById("batchYearInput").value.trim();
+    const year = document.querySelector('input[name="year"]:checked')?.value;
+    const shift = document.querySelector('input[name="shift"]:checked')?.value;
+    const email = localStorage.getItem("email");
+    const messageElement = document.getElementById("message");
+
+    messageElement.innerText = "";
+
+    if (!registerNumber || !department || !batchYear || !year || !shift) {
+        messageElement.innerText = "All fields are required.";
+        return;
+    }
+
+    if (!/^\d{10}$/.test(registerNumber)) {
+        messageElement.innerText = "Invalid register number. Must be 10 digits.";
+        return;
+    }
+
+    const validDepartments = ["BCA", "BSC", "BCOM", "BCOM(CA)", "BCOM(CS)", "VISCOM", "TAMIL", "ENGLISH"];
+    if (!validDepartments.includes(department)) {
+        messageElement.innerText = "Invalid department.";
+        return;
+    }
+
+    try {
+        // Get the admin-set academic year
+        const academicYear = localStorage.getItem("academicYear");
+        if (!academicYear) {
+            window.location.href = "checkyear.html"; // Redirect if no academic year is set
+            return;
+        }
+
+        const [startYear, endYear] = academicYear.split(" to ").map(Number);
+
+        // Check if batch year is within the academic year range
+        if (batchYear < startYear || batchYear > endYear) {
+            window.location.href = "checkyear.html"; // Redirect if batch year is invalid
+            return;
+        }
+
+        // Submit the form data
+        const response = await fetch("http://localhost:3001/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, registerNumber, department, batchYear, year, shift })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Registration successful!");
+            window.location.href = "emailverify.html";
+        } else {
+            messageElement.innerText = data.message;
+        }
+    } catch (error) {
+        messageElement.innerText = "An error occurred.";
+    }
+});
+
+document.addEventListener("DOMContentLoaded", async function () {
+    await fetchPhase(); // Fetch and check phase on page load
+});
+
+async function fetchPhase() {
+    try {
+        const response = await fetch("http://localhost:3001/api/currentPhase");
+        const data = await response.json();
+        const phase = data.phase || "registration"; // Default phase set to "voting"
+
+        const phaseMessage = document.getElementById("currentPhase");
+
+        if (!phaseMessage) return; // Ensure the element exists
+
+        if (phase === "registration") {
+            mainContent.style.display = "block"; // Hide content
+            mainPanel.style.display = "block"; // Hide main panel
+        }else if (phase === "voting") {
+            phaseMessage.innerHTML = "<h2><b>Registration is closed! Go to the voting tab to vote.</b></h2>";
+            mainContent.style.display = "none"; // Hide content
+            mainPanel.style.display = "none"; // Hide main panel
+        } else if (phase === "result") { // ✅ Fixed else if condition
+            phaseMessage.innerHTML = "<h2><b>Registration is closed! Go to the result tab to see the results.</b></h2>";
+            mainContent.style.display = "none"; // Hide content
+            mainPanel.style.display = "none"; // Hide main panel
+        }
+
+    } catch (error) {
+        console.error("Error fetching phase:", error);
+    }
+}
+
+
+
+</script>
+</html>

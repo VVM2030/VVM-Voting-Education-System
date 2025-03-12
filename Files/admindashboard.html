@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>VVM Admin Dashboard</title>
+
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link href="./css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="sidebar" data-color="green" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+            <div class="sidebar-wrapper">
+              <ul class="nav" style="margin-top: 50px;">
+                <li class="nav-item">
+                  <a class="nav-link" href="candidatedetails.html">
+                    <i class="material-icons">info</i>
+                    <p>Student Details</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="addcandidate.html">
+                    <i class="material-icons">person_add</i>
+                    <p>Add Student</p>
+                  </a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">
+                    <i class="material-icons">how_to_reg</i>
+                    <p>Register</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="changephase.html">
+                    <i class="material-icons">published_with_changes</i>
+                    <p>Change Phase</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">
+                    <i class="material-icons">logout</i>
+                    <p>LogOut</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+        </div>
+
+        <div class="main-panel">
+          <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">
+            <div class="container-fluid">
+              <div class="navbar-wrapper">
+                <a class="navbar-brand" href="javascript:;"></a>
+              </div>
+            </div>
+          </nav>
+    
+          <div class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header card-header-success">
+                      <h4 class="card-title">Voter Registration</h4>
+                    </div>
+                    <div class="card-body">
+                      <div>
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th>S.N</th>
+                                      <th>Register Number</th>
+                                      <th>Is Registered</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="voterList">
+                              </tbody>
+                          </table>
+                      </div>
+
+                      <form id="voterForm">
+                          <div class="form-group">
+                            <br>
+                            <input type="text" class="form-control" id="registerNumber" placeholder="Enter Register Number" required>
+                          </div>
+                          <br>
+                          <button type="submit" class="btn btn-success">Register</button>
+                      </form>
+
+                      <p id="message" style="font-weight: bold;"></p>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+<script>
+
+async function fetchRegisteredUsers() {
+  try {
+    const response = await fetch("http://localhost:3001/getRegisteredUsers");
+    const registeredUsers = await response.json();
+
+    const tableBody = document.getElementById("voterList");
+    tableBody.innerHTML = ""; // Clear existing table data
+
+    registeredUsers.forEach((user, index) => {
+      addVoterRow(index + 1, user.registerNumber, user.verified);
+    });
+
+  } catch (error) {
+    console.error("Error fetching registered users:", error);
+  }
+}
+
+async function registerVoter(event) {
+  event.preventDefault();
+  const registerNumber = document.getElementById("registerNumber").value.trim();
+
+  if (!registerNumber) {
+    showMessage("Please enter a valid Register Number", "red");
+    return;
+  }
+
+  // Check if registerNumber already exists in the table
+  if (isRegisterNumberExists(registerNumber)) {
+    showMessage("Register Number already exists!", "red");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:3001/registerVoter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ registerNumber })
+    });
+
+    const data = await response.json();
+    showMessage(data.message, data.success ? "green" : "red");
+
+    if (data.success) {
+      addVoterRow(getTableRowCount() + 1, registerNumber, true); // Add new voter to table immediately
+    }
+  } catch (error) {
+    console.error("Error registering voter:", error);
+    showMessage("An error occurred. Please try again.", "red");
+  }
+
+  document.getElementById("registerNumber").value = "";
+}
+
+function addVoterRow(sn, registerNumber, verified) {
+  const tableBody = document.getElementById("voterList");
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${sn}</td>
+    <td>${registerNumber}</td>
+    <td>${verified ? "Yes" : "No"}</td>
+  `;
+  tableBody.appendChild(row);
+}
+
+function isRegisterNumberExists(registerNumber) {
+  const tableRows = document.querySelectorAll("#voterList tr");
+  for (let row of tableRows) {
+    if (row.cells[1].textContent === registerNumber) {
+      return true; // Register number already exists
+    }
+  }
+  return false;
+}
+
+function getTableRowCount() {
+  return document.querySelectorAll("#voterList tr").length;
+}
+
+function showMessage(message, color) {
+  const messageElement = document.getElementById("message");
+  messageElement.textContent = message;
+  messageElement.style.color = color;
+}
+
+// Keep the list updated when switching back to the tab
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    fetchRegisteredUsers();
+  }
+});
+
+// Fetch the voter list once when the page loads
+document.getElementById("voterForm").addEventListener("submit", registerVoter);
+document.addEventListener("DOMContentLoaded", fetchRegisteredUsers);
+
+</script>
+
+</body>
+</html>

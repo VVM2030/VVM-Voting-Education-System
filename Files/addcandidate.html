@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <title>VVM Adding Students</title>
+
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link href="./css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+    <link href="./css/addcandidate.css" rel="stylesheet" />
+
+    <style>
+
+          #loader {
+          display: none; /* Hidden by default */
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper ">
+      <div class="sidebar" data-color="green" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+          <div class="sidebar-wrapper">
+            <ul class="nav" style="margin-top: 50px;">
+              <li class="nav-item">
+                <a class="nav-link" href="candidatedetails.html">
+                  <i class="material-icons">info</i>
+                  <p>Student Details</p>
+                </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#">
+                  <i class="material-icons">person_add</i>
+                  <p>Add Student</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="admindashboard.html">
+                  <i class="material-icons">how_to_reg</i>
+                  <p>Register</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="changephase.html">
+                  <i class="material-icons">published_with_changes</i>
+                  <p>Change State</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="index.html">
+                  <i class="material-icons">logout</i>
+                  <p>LogOut</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+      </div>
+      <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+          <div class="container-fluid">
+            <div class="navbar-wrapper">
+              <a class="navbar-brand" href="javascript:;"></a>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="navbar-toggler-icon icon-bar"></span>
+              <span class="navbar-toggler-icon icon-bar"></span>
+              <span class="navbar-toggler-icon icon-bar"></span>
+            </button>
+          </div>
+        </nav>
+  
+        <div class="content">
+          <div class="container" style="width: 800px">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="card">
+                          <div class="card-header card-header-success">
+                              <h4 class="card-title">Add Candidate Information</h4>
+                          </div>
+                          <br/>
+                          <div class="card-body">
+                              <form onsubmit="addCandidate(); return false;">
+                                  <div class="row mb-4">
+                                      <div class="col">
+                                          <div class="form-outline">
+                                              <input type="text" id="name" class="form-control" required />
+                                              <label class="form-label">Name</label>
+                                          </div>
+                                      </div>
+                                      <div class="col">
+                                          <div class="form-outline">
+                                              <input type="text" id="department" class="form-control" required />
+                                              <label class="form-label">Department (in capital letters)</label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mb-4">
+                                      <div class="col">
+                                          <div class="form-outline">
+                                              <input type="number" id="year" class="form-control" required />
+                                              <label class="form-label">Year (Only 1, 2, 3 Allowed)</label>
+                                          </div>
+                                      </div>
+                                      <div class="col">
+                                          <div class="form-outline">
+                                              <input type="number" id="shift" class="form-control" required />
+                                              <label class="form-label">Shift (Only 1 or 2 Allowed)</label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mb-4">
+                                    <div class="col">
+                                        <input type="text" id="college" class="form-control" required />
+                                        <label class="form-label">College Name</label>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="position" class="form-control" required />
+                                        <label class="form-label">Position</label>
+                                    </div>
+                                </div>
+                                  <button type="submit" class="btn btn-success btn-block mb-4">Add</button>
+                              </form>
+                          </div>
+                          <div class="alert alert-success" id="loader">
+                              <span><b> Candidate </b> has been added Successfully....!</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+    async function addCandidate() {
+        const name = document.getElementById("name").value.trim();
+        const department = document.getElementById("department").value.trim();
+        const year = parseInt(document.getElementById("year").value);
+        const shift = parseInt(document.getElementById("shift").value);
+        const college = document.getElementById("college").value.trim();
+        const position = document.getElementById("position").value.trim();
+
+        const validDepartments = ["BCA", "BSC", "BCOM", "BCOM(CA)", "BCOM(CS)", "VISCOM", "TAMIL", "ENGLISH"];
+
+        if (!name || !department || !college || !position) {
+            alert("All fields are required!");
+            return;
+        }
+
+        if (!validDepartments.includes(department)) {
+           alert("Invalid department entered.");
+            return;
+        }
+
+        if (![1, 2, 3].includes(year)) {
+            alert("Year must be 1, 2, or 3!");
+            return;
+        }
+
+        if (![1, 2].includes(shift)) {
+            alert("Shift must be either 1 or 2!");
+            return;
+        }
+
+        const candidateData = { name, department, year, shift, college, position };
+
+        try {
+            const response = await fetch('http://localhost:3001/addCandidate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(candidateData)
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById("loader").style.display = "block";
+                setTimeout(() => {
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("name").value = "";
+                    document.getElementById("department").value = "";
+                    document.getElementById("year").value = "";
+                    document.getElementById("shift").value = "";
+                    document.getElementById("college").value = "";
+                    document.getElementById("position").value = "";
+                }, 2000);
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while adding the candidate.');
+        }
+    }
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+
+</body>
+</html>
