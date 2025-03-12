@@ -211,7 +211,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         }
 
         // Submit the form data
-        const response = await fetch("http://localhost:3001/register", {
+        const response = await fetch("https://voting-education-system.onrender.com/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, registerNumber, department, batchYear, year, shift })
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 async function fetchPhase() {
     try {
-        const response = await fetch("http://localhost:3001/api/currentPhase");
+        const response = await fetch("https://voting-education-system.onrender.com/api/currentPhase");
         const data = await response.json();
         const phase = data.phase || "registration"; // Default phase set to "voting"
 
